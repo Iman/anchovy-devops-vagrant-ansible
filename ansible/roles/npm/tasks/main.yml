@@ -1,0 +1,16 @@
+---
+- name: install npm
+  sudo: true
+  apt:  pkg=npm state=present
+
+- name: install global node packages
+  sudo: true
+  npm: name={{item}} global=yes
+  with_items:
+    - uglifycss
+    - uglify-js
+    - less
+    - coffee-script
+    - socket.io
+    - purify-css
+    - bower

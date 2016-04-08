@@ -1,0 +1,22 @@
+---
+- name: Install Nginx
+  sudo: yes
+  apt: pkg=nginx state=latest
+
+- name: Set sendfile to off in nginx
+  lineinfile: dest=/etc/nginx/nginx.conf
+              backup=yes
+              state=present
+              regexp='^sendfile on;'
+              backrefs=yes
+              line='     sendfile off;'
+
+- name: Change default nginx site
+  sudo: yes
+  template: src=default.j2 dest=/etc/nginx/sites-available/default
+  notify: restart nginx
+
+- name: Make symlink for Default
+  sudo: yes
+  file: src=/etc/nginx/sites-available/default dest=/etc/nginx/sites-enabled/default state=link
+  notify: restart nginx

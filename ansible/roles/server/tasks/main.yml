@@ -1,0 +1,34 @@
+---
+- name: Add repos
+  sudo: yes
+  apt_repository: repo='http://us.archive.ubuntu.com/ubuntu/ trusty multiverse' state=present
+  apt_repository: repo='deb-src http://us.archive.ubuntu.com/ubuntu/ trusty multiverse' state=present
+  apt_repository: repo='http://us.archive.ubuntu.com/ubuntu/ trusty-updates multiverse' state=present
+  apt_repository: repo='deb-src http://us.archive.ubuntu.com/ubuntu/ trusty-updates multiverse' state=present
+
+- name: Update apt
+  sudo: yes
+  apt: update_cache=yes
+
+- name: Upgrade apt
+  sudo: yes
+  apt: upgrade=full
+
+- name: Install Packages
+  sudo: yes
+  apt: pkg={{ item }} state=latest
+  with_items: server.packages
+  when: server.packages is defined
+
+- name: Configure the timezone
+  sudo: yes
+  template: src=timezone.tpl dest=/etc/timezone
+
+- name: More Configure the timezone
+  sudo: yes
+  file: src=/usr/share/zoneinfo/{{server.timezone}} dest=/etc/localtime state=link force=yes backup=yes
+
+- name: Set default system language pack
+  shell: locale-gen {{server.locale}}
+  sudo: yes
+

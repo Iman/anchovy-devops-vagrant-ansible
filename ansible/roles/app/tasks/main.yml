@@ -1,0 +1,8 @@
+---
+- name: update file db
+  sudo: yes
+  shell: updatedb
+
+- name: clean - Remove unneeded packages
+  shell: apt-get autoremove -y
+  sudo: true
