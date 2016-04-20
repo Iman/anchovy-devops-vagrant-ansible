@@ -1,6 +1,6 @@
 # Anchovy web projects development environment
 
-This stack is using Ansible and Vagrant to create a stack of Nginx, MongoDB, Radius, Memcache/Memcached, npm, PHP5, MySQL xdebug and Composer. 
+Using Ansible and Vagrant to create a stack of Nginx, MongoDB, Radius, Memcache/Memcached, npm, PHP5, MySQL, xdebug and Composer. 
 
 ## Prerequisites
 - [virtualbox](https://www.virtualbox.org/wiki/Downloads)
